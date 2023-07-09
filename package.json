@@ -1,0 +1,43 @@
+{
+  "name": "3d-tour",
+  "version": "1.0.0",
+  "description": "creating a 360 tour website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sultondev/360-city-tour.git"
+  },
+  "keywords": [
+    "360",
+    "tour",
+    "city",
+    "cities"
+  ],
+  "author": "sultondev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sultondev/360-city-tour/issues"
+  },
+  "homepage": "https://github.com/sultondev/360-city-tour#readme",
+  "devDependencies": {
+    "@photo-sphere-viewer/markers-plugin": "^5.1.7",
+    "@types/node": "^20.4.1",
+    "browser-sync": "^2.29.3",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-uglify-es": "^3.0.0",
+    "sass": "^1.63.6",
+    "three": "^0.154.0"
+  },
+  "dependencies": {
+    "@photo-sphere-viewer/autorotate-plugin": "^5.1.7",
+    "@photo-sphere-viewer/core": "^5.1.7"
+  }
+}
