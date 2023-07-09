@@ -15,7 +15,6 @@ function watching() {
 
 function buildStyles() {
 	return src([
-		"node_modules/@photo-sphere-viewer/core/index.css",
 		"app/scss/*.scss",
 	])
 		.pipe(concat("style.min.css"))
@@ -41,9 +40,10 @@ function buildScriptes() {
 
 function build() {
 	return src(
-		[
-			"app/images/**/*.{png,jpg,svg}",
-			"app/images/*.{png,jpg,svg}",
+		[	
+			"app/assets/fonts/**/*.{ttf, woff, woff2}",
+			"app/assets/images/**/*.{png,jpg,svg}",
+			"app/assets/images/*.{png,jpg,svg}",
 			"app/css/style.min.css",
 			"app/js/minified/main.min.js",
 			"app/**/*.html",
