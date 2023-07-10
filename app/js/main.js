@@ -1,4 +1,5 @@
-const baseUrl = "..//images/360/";
+import { a } from "./constants";
+const baseUrl = "./../assets/images/360/";
 
 const animatedValues = {
 	pitch: { start: -Math.PI / 2, end: 0.2 },
@@ -7,16 +8,20 @@ const animatedValues = {
 	fisheye: { start: 2, end: 0 },
 };
 
-const viewer = new PhotoSphereViewer.Viewer({
-	container: "viewer",
-	panorama: baseUrl + "test3.jpg",
-	caption: "Parc national du Mercantour <b>&copy; Damien Sorel</b>",
-	loadingImg: baseUrl + "loader.gif",
-	touchmoveTwoFingers: true,
-	mousewheelCtrlKey: true,
-});
+let viewer = null;
 
-viewer.addEventListener("dblclick", ({ data }) => {
+function init() {
+	viewer = new PhotoSphereViewer.Viewer({
+		container: "viewer",
+		panorama: baseUrl + "2.png",
+		caption: "Parc national du Mercantour <b>&copy; Damien Sorel</b>",
+		loadingImg: baseUrl + "loader.gif",
+		touchmoveTwoFingers: true,
+		mousewheelCtrlKey: true,
+	});
+}
+
+viewer?.addEventListener("dblclick", ({ data }) => {
 	viewer.animate({
 		yaw: data.yaw,
 		pitch: data.pitch,
@@ -24,4 +29,10 @@ viewer.addEventListener("dblclick", ({ data }) => {
 		speed: 1000,
 	});
 });
-console.log("hello world");
+console.log("hell sdsdsso wosdsrld2");
+
+console.log(a);
+console.log(a);
+console.log(a);
+console.log(a);
+console.log(a);

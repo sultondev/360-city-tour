@@ -1,12 +1,125 @@
+@function diagonalBg($base) {
+    
+    @return linear-gradient($base, var(--light-bg) 60%, var(--black-clr) 40%)
+}
+
+:root {
+    --br-clr: #ffffff40;
+    --white-clr: #FFFFFF;
+    --light-bg: #FFFFFFCC;
+    --black-clr: #000;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html, body, #viewer {
+html, body {
+    width: 100vw;
+    height: 100vh;
+}
+
+
+#viewer {
     margin: 0;
     width: 100vw;
     height: 100vh;
     font-family: sans-serif;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.welcome{
+    &-page {
+        background: url('../assets/images/cities/city-1.png') center center/cover;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        &::before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: -112px;
+            left: 0;
+            opacity: 70%;
+            background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
+            z-index: 1;
+        }
+        &::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            bottom: -112px;
+            left: 0;
+            opacity: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0) 74%, #000000 100%);
+            z-index: 1;
+        }
+    } 
+}
+
+.header {
+    z-index: 100;
+    position: relative;
+    padding: 30px 30px 0 30px;
+    &-container {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 2px solid var(--br-clr);
+    }
+
+    &-logo {
+        border-right: 2px solid var(--br-clr);
+        padding: 0 20px 9px 0;
+    }
+}
+
+.contacts {
+    display: flex;
+    &-socials {
+        display: flex;
+        padding: 10px 12.5px;
+        border-left: 2px solid var(--br-clr);
+        &__item {
+            padding: 0 7.5px;
+        }
+    }   
+
+    &__phone {
+        border-left: 2px solid var(--br-clr);
+        display: flex;
+        align-items: center;
+        color: var(--white-clr);
+        padding: 0 6px 0 15px;
+    }
+}
+
+
+.main {
+    position: relative;
+    z-index: 100;
+}
+
+.diagonal__btn {
+    background: diagonalBg(var(--diagonal-deg));
+    border: none;
+    color: white;
+    & .btn__text {
+        color: white;
+        position: relative;
+        z-index: 100;
+    }
 }
