@@ -129,6 +129,7 @@ html, body {
     border: 2px solid;
     border-image: linear-gradient(140deg, var(--light-bg) 60%, transparent 40%);
     background: diagonalBg(var(--diagonal-deg));
+    position:absolute;
     cursor: pointer;
     // &::before {
     //     content: "";

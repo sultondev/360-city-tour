@@ -2,12 +2,18 @@ import mapCities from './constants'
 
 const baseUrl = "./../assets/images/360/";
 
-const animatedValues = {
-	pitch: { start: -Math.PI / 2, end: 0.2 },
-	yaw: { start: Math.PI, end: 0 },
-	zoom: { start: 0, end: 50 },
-	fisheye: { start: 2, end: 0 },
-};
+const mapCities = [
+    {
+        style: '--diagonal-deg: 140deg;',
+        elementClass: 'diagonal__btn',
+        btnSymbolValue: 'P1',
+        btnTextValue: 'Pinthouse',
+		yCoordinate: '192px',
+		xCoordiante: '986px'
+    }
+] 
+
+
 
 let viewer = null;
 
@@ -19,6 +25,7 @@ function init() {
 		loadingImg: baseUrl + "loader.gif",
 		touchmoveTwoFingers: true,
 		mousewheelCtrlKey: true,
+		yCoordinate: ''
 	});
 }
 viewer.addEventListener("dblclick", ({ data }) => {
@@ -37,6 +44,23 @@ document.querySelector(".diagonal__btn").addEventListener("click", (event) => {
 	document.querySelector("#viewer").target.style = "z-index:100;";
 	init();
 });
+
+let mainMapCitiesBtns = ''
+
+mapCities.forEach((item) => {
+	mainMapCitiesBtns += `
+		<button style="--diagonal-deg: 140deg;transform:translate(${item.xCoordiante}, ${item.yCoordinate})" class="diagonal__btn">
+		<div class="btn__symbol">
+			P1
+		</div>
+		<div class="btn__text">
+			dwa
+		</div>
+		</button>
+	`
+})
+
+mainMapPicture.innerHTML += mainMapCitiesBtns;
 
 // mainMapPicture.addEventListener("click", (event) => {
 // 	var x = (event.clientX / window.innerWidth) * 100;
