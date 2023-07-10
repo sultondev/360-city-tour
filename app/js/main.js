@@ -1,3 +1,4 @@
+import { a } from "./constants";
 const baseUrl = "./../assets/images/360/";
 
 const animatedValues = {
@@ -6,7 +7,6 @@ const animatedValues = {
 	zoom: { start: 0, end: 50 },
 	fisheye: { start: 2, end: 0 },
 };
-
 
 let viewer = null;
 
@@ -21,9 +21,7 @@ function init() {
 	});
 }
 
-
-
-viewer.addEventListener("dblclick", ({ data }) => {
+viewer?.addEventListener("dblclick", ({ data }) => {
 	viewer.animate({
 		yaw: data.yaw,
 		pitch: data.pitch,
@@ -31,4 +29,10 @@ viewer.addEventListener("dblclick", ({ data }) => {
 		speed: 1000,
 	});
 });
-console.log("hello world");
+console.log("hell sdsdsso wosdsrld2");
+
+console.log(a);
+console.log(a);
+console.log(a);
+console.log(a);
+console.log(a);
