@@ -25,15 +25,13 @@
 <body>
     
     <div class="app">
-        <div class="main-city">
-            <!-- <button   style="--diagonal-deg: 140deg;position:absolute;z-index:100;transform:translate(986px, 192px)" class="diagonal__btn">
-                <div class="btn__symbol">
-                    P1
-                </div>
-                <div class="btn__text">
-                    dwa
-                </div>
-                </button> -->
+        <div class="main-city" id="main-city">
+            <div class="main-city__shadows">
+            </div>
+            <img src="assets/images/cities/main-city.png" alt="" class="main-city__picture">
+            <div class="main-city__marks" id="picked-places">
+                
+            </div>
         </div>
         <div class="container">
             <header class="header">
@@ -55,25 +53,99 @@
                 </div>
             </header>
             <main class="main">
-                <!-- <button class="diagonal__btn" style="--diagonal-deg: 140deg">
-                    <div class="btn__symbol">
-                        P1
-                    </div>
-                    <div class="btn__text">
-                        dwa
-                    </div>
-                </button> -->
             </main>
         </div>
     </div>
     
     <!-- the viewer container must have a defined size -->
-    <div id="viewer" style="width: 100vw; height: 100vh;"></div>
+    <div class="tour-container">
+        <div class="tour-header">
+            <div class="tour-street__code">
+                2
+            </div>
+            <div class="tour-street__name">
+                L-Shape
+            </div>
+            <button class="tour-container__closer" id="tour__closer">
+                <img src="./assets/images/icons/close-icon.svg" class="tour-container__closer-icon" alt="">
+            </button>
+        </div>
+        <div id="viewer"></div>
+    </div>
     
-    <script src="https://cdn.jsdelivr.net/npm/three/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core/index.min.js"></script>
-
     <script src="js/minified/main.min.js">
+
+    </script>
+
+    <script>
+
+const mapCities = [
+	{
+		style: "--diagonal-deg: 140deg;",
+		elementClass: "diagonal__btn",
+		btnSymbolValue: "M1",
+		btnTextValue: "Apartments",
+		yCoordinate: "192px",
+		xCoordiante: "986px",
+	},
+
+	{
+		style: "--diagonal-deg: 140deg;",
+		elementClass: "diagonal__btn",
+		btnSymbolValue: "P1",
+		btnTextValue: "Park",
+		yCoordinate: "497px",
+		xCoordiante: "655px",
+	},
+	{
+		style: "--diagonal-deg: 140deg;",
+		elementClass: "diagonal__btn",
+		btnSymbolValue: "M2",
+		btnTextValue: "Mantions",
+		yCoordinate: "542px",
+		xCoordiante: "229px",
+	},
+	{
+		style: "--diagonal-deg: 140deg;",
+		elementClass: "diagonal__btn",
+		btnSymbolValue: "R2",
+		btnTextValue: "Road",
+		yCoordinate: "680px",
+		xCoordiante: "1199px",
+	},
+];
+
+const mainMapContainer = document.querySelector("#picked-places");
+const tourCloser = document.querySelector('#tour__closer')
+let mainMapCitiesBtns = "";
+
+mapCities.forEach((item) => {
+	mainMapCitiesBtns += `
+		<button style="--diagonal-deg: 140deg;transform:translate(${item.xCoordiante}, ${item.yCoordinate})" class="diagonal__btn">
+			<div class="btn__symbol">
+				${item.btnSymbolValue}
+			</div>
+			<div class="btn__text">
+				${item.btnTextValue}
+			</div>
+		</button>
+	`;
+});
+mainMapContainer.innerHTML += mainMapCitiesBtns;
+console.log(mainMapContainer);
+
+document.querySelector(".diagonal__btn").addEventListener("click", (event) => {
+	event.preventDefault();
+});
+
+function printMousePos(event) {
+	console.log("clientX: " + event.clientX + " - clientY: " + event.clientY);
+}
+
+tourCloser.addEventListener('click', ()=> {
+    document.querySelector('.tour-container').style = 'display: none;'
+})
+document.addEventListener("click", printMousePos);
 
     </script>
 </body>

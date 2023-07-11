@@ -24,18 +24,66 @@ html, body {
 
 #viewer {
     margin: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     font-family: sans-serif;
-    position: absolute;
+    position: relative;
     top: 0;
-    z-index: 10;
+    z-index: 999999;
     left: 0;
+
 }
 
 .app {
     min-height: 100vh;
     min-width: 100vw;
+}
+
+.tour {
+    &-container {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        left: 0;
+        top: 0;
+        background: #00000099;
+        z-index: 99999;
+        padding: 80px 120px;
+        &__closer{
+            background: transparent;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            justify-self: flex-end;
+            max-height: fit-content;
+            max-width: fit-content;
+            padding: 16px 0 16px 16px;
+            &-icon {
+                width: 22px;
+                height: 22px;
+            }
+        }
+    }
+    &-street {
+        &__code {
+            color: var(--white-clr);
+            border: 1px solid var(--white-clr);
+            padding: 2px 8px;
+            margin-right: 10px;
+        }
+
+        &__name {
+            color: var(--white-clr);
+        }
+    }
+    &-header {
+        display: flex;
+        margin-bottom: 10px;
+        align-items: center;
+    }
 }
 
 .container {
@@ -46,37 +94,55 @@ html, body {
 .main{
     min-height: 100%;
     &-city {
-        background: url('../assets/images/cities/main-city.png') center center/cover;
-        width: 100%;
-        height: 100vh;
-        z-index: 100;
         position: absolute;
+        min-height: 100vh;
+        min-width: 100vw;
         overflow: hidden;
-        &::before {
-            content: "";
-            display: block;
-            width: 100%;
-            height: 100%;
+        &__picture {
+            width: 100vw;
+            height: 100vh;
+            z-index: 10;
             position: absolute;
-            top: -112px;
-            left: 0;
-            opacity: 70%;
-            background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
-            z-index: 1;
+            overflow: hidden;
+           
         }
-        &::after {
-            content: "";
-            display: block;
-            width: 100%;
-            height: 100%;
+
+        &__shadows{
+            &::before {
+                content: "";
+                display: block;
+                width: 100vw;
+                height: 100vh;
+                position: absolute;
+                top: -182px;
+                left: 0;
+                opacity: 70%;
+                background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
+                z-index: 20;
+            }
+            &::after {
+                content: "";
+                display: block;
+                width: 100vw;
+                height: 100vh;
+                position: absolute;
+                bottom: -112px;
+                left: 0;
+                opacity: 100%;
+                background: linear-gradient(rgba(0, 0, 0, 0) 74%, #000000 100%);
+                z-index: 20;
+            }
+        }
+
+        &__marks {
             position: absolute;
-            bottom: -112px;
-            left: 0;
-            opacity: 100%;
-            background: linear-gradient(rgba(0, 0, 0, 0) 74%, #000000 100%);
-            z-index: 1;
+            z-index: 1000;
+            width: 100vw;
+            height: 100vh;
         }
-    } 
+    }
+    
+        
 }
 
 .header {
@@ -125,6 +191,7 @@ html, body {
     border: none;
     color: white;
     display: flex;
+    align-items: center;
     padding: 3px 4px;
     border: 2px solid;
     border-image: linear-gradient(140deg, var(--light-bg) 60%, transparent 40%);
@@ -148,10 +215,12 @@ html, body {
         background: var(--white-clr);
         color: var(--black-clr);
         padding: 4px 6px;
+        margin-right: 10px;
     }
     & .btn__text {
         color: white;
         position: relative;
         z-index: 100;
+        padding: 2px 8px;
     }
 }

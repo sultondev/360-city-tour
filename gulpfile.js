@@ -14,9 +14,7 @@ function watching() {
 }
 
 function buildStyles() {
-	return src([
-		"app/scss/*.scss",
-	])
+	return src(["app/scss/*.scss"])
 		.pipe(concat("style.min.css"))
 		.pipe(sourcemap.init())
 		.pipe(scss({ outputStyle: "compressed" }).on("error", scss.logError))
@@ -31,7 +29,16 @@ function buildStyles() {
 }
 
 function buildScriptes() {
-	return src(["app/js/*.js"], { ignore: "app/js/main.min.{js}" })
+	return src(
+		[
+			// "app/js/visual-tasks.js",
+			"./node_modules/three/build/three.js",
+			"./node_modules/@photo-sphere-viewer/core/index.js",
+			"./node_modules/@photo-sphere-viewer/autorotate-plugin/index.js",
+			"app/js/main.js",
+		],
+		{ ignore: "app/js/main.min.{js}" }
+	)
 		.pipe(concat("main.min.js"))
 		.pipe(uglify())
 		.pipe(dest("app/js/minified"))
@@ -40,7 +47,7 @@ function buildScriptes() {
 
 function build() {
 	return src(
-		[	
+		[
 			"app/assets/fonts/**/*.{ttf, woff, woff2}",
 			"app/assets/images/**/*.{png,jpg,svg}",
 			"app/assets/images/*.{png,jpg,svg}",

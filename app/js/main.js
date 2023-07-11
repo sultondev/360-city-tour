@@ -1,33 +1,47 @@
-import mapCities from './constants'
-
 const baseUrl = "./../assets/images/360/";
 
-const mapCities = [
-    {
-        style: '--diagonal-deg: 140deg;',
-        elementClass: 'diagonal__btn',
-        btnSymbolValue: 'P1',
-        btnTextValue: 'Pinthouse',
-		yCoordinate: '192px',
-		xCoordiante: '986px'
-    }
-] 
+const animatedValues = {
+	pitch: { start: -Math.PI / 2, end: 0.2 },
+	yaw: { start: Math.PI, end: 0 },
+	zoom: { start: 0, end: 50 },
+	fisheye: { start: 2, end: 0 },
+};
 
+const viewer = new PhotoSphereViewer.Viewer({
+	container: "viewer",
+	panorama: baseUrl + "2.png",
+	caption: "Parc national du Mercantour <b>&copy; Damien Sorel</b>",
+	loadingImg: baseUrl + "2.png",
+	touchmoveTwoFingers: true,
+	mousewheelCtrlKey: true,
 
+	defaultPitch: animatedValues.pitch.start,
+	defaultYaw: animatedValues.yaw.start,
+	defaultZoomLvl: animatedValues.zoom.start,
+	fisheye: animatedValues.fisheye.start,
+	navbar: [
+		"autorotate",
+		"zoom",
+		{
+			title: "Rerun animation",
+			content: "🔄",
+			onClick: intro,
+		},
+		"caption",
+		"fullscreen",
+	],
+	plugins: [
+		[
+			PhotoSphereViewer.AutorotatePlugin,
+			{
+				autostartDelay: null,
+				autostartOnIdle: false,
+				autorotatePitch: animatedValues.pitch.end,
+			},
+		],
+	],
+});
 
-let viewer = null;
-
-function init() {
-	viewer = new PhotoSphereViewer.Viewer({
-		container: "viewer",
-		panorama: baseUrl + "2.png",
-		caption: "Parc national du Mercantour <b>&copy; Damien Sorel</b>",
-		loadingImg: baseUrl + "loader.gif",
-		touchmoveTwoFingers: true,
-		mousewheelCtrlKey: true,
-		yCoordinate: ''
-	});
-}
 viewer.addEventListener("dblclick", ({ data }) => {
 	viewer.animate({
 		yaw: data.yaw,
@@ -37,36 +51,23 @@ viewer.addEventListener("dblclick", ({ data }) => {
 	});
 });
 
-const mainMapPicture = document.querySelector(".main-city");
-console.log(mapCities)
-document.querySelector(".diagonal__btn").addEventListener("click", (event) => {
-	event.preventDefault();
-	document.querySelector("#viewer").target.style = "z-index:100;";
-	init();
-});
+const autorotate = viewer.getPlugin(PhotoSphereViewer.AutorotatePlugin);
 
-let mainMapCitiesBtns = ''
+viewer.addEventListener("ready", intro, { once: true });
 
-mapCities.forEach((item) => {
-	mainMapCitiesBtns += `
-		<button style="--diagonal-deg: 140deg;transform:translate(${item.xCoordiante}, ${item.yCoordinate})" class="diagonal__btn">
-		<div class="btn__symbol">
-			P1
-		</div>
-		<div class="btn__text">
-			dwa
-		</div>
-		</button>
-	`
-})
+function intro() {
+	autorotate.stop();
 
-mainMapPicture.innerHTML += mainMapCitiesBtns;
-
-// mainMapPicture.addEventListener("click", (event) => {
-// 	var x = (event.clientX / window.innerWidth) * 100;
-// 	var y = (event.clientY / window.innerHeight) * 100;
-
-// 	console.log("clientX: " + event.clientX + " - clientY: " + event.clientY);
-// });
-
-// console.log("clientX: 986 - clientY: 197");
+	new PhotoSphereViewer.utils.Animation({
+		properties: animatedValues,
+		duration: 2500,
+		easing: "inOutQuad",
+		onTick: (properties) => {
+			viewer.setOption("fisheye", properties.fisheye);
+			viewer.rotate({ yaw: properties.yaw, pitch: properties.pitch });
+			viewer.zoom(properties.zoom);
+		},
+	}).then(() => {
+		autorotate.start();
+	});
+}
