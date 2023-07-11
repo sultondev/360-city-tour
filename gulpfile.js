@@ -50,6 +50,7 @@ function build() {
 		[
 			"app/assets/fonts/**/*.{ttf, woff, woff2}",
 			"app/assets/images/**/*.{png,jpg,svg}",
+			"app/assets/images/**/*.{png,jpg,svg}",
 			"app/assets/images/*.{png,jpg,svg}",
 			"app/css/style.min.css",
 			"app/js/minified/main.min.js",
