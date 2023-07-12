@@ -76,7 +76,7 @@
     <script src="js/minified/main.min.js">
 
     </script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script>
 
 const mapCities = [
@@ -121,7 +121,7 @@ let mainMapCitiesBtns = "";
 
 mapCities.forEach((item) => {
 	mainMapCitiesBtns += `
-		<button style="--diagonal-deg: 140deg;transform:translate(${item.xCoordiante}, ${item.yCoordinate})" class="diagonal__btn">
+		<button style="--diagonal-deg: 140deg;transform:translate(${item.xCoordiante}, ${item.yCoordinate})" class="tour-container__opener diagonal__btn">
 			<div class="btn__symbol">
 				${item.btnSymbolValue}
 			</div>
@@ -132,20 +132,31 @@ mapCities.forEach((item) => {
 	`;
 });
 mainMapContainer.innerHTML += mainMapCitiesBtns;
-console.log(mainMapContainer);
 
 document.querySelector(".diagonal__btn").addEventListener("click", (event) => {
 	event.preventDefault();
 });
+
+document.querySelectorAll('.tour-container__opener').forEach(el=> {
+    el.addEventListener('click', ()=>{
+        gsap.to("#viewer", { duration: 0.5, opacity: 1, scale: 1 });
+        gsap.to(".tour-container", { duration: 0.2, opacity: 1, visibility: 'visible', pointerEvents: "auto"});
+    })
+})
 
 function printMousePos(event) {
 	console.log("clientX: " + event.clientX + " - clientY: " + event.clientY);
 }
 
 tourCloser.addEventListener('click', ()=> {
-    document.querySelector('.tour-container').style = 'display: none;'
+    gsap.to("#viewer", { duration: 0.5, opacity: 0, scale: 0.8 });
+    gsap.to(".tour-container", { duration: 1, opacity: 0, onComplete: hideContainer()});
 })
-document.addEventListener("click", printMousePos);
+document.addEventListener("click", printMousePos); 
+
+function hideContainer() {
+    gsap.to('.tour-container', {pointerEvents: "none"})
+}
 
     </script>
 </body>

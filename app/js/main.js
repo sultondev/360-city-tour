@@ -1,4 +1,4 @@
-const baseUrl = "./../assets/images/360/";
+const baseUrl = "./assets/images/360/";
 
 const animatedValues = {
 	pitch: { start: -Math.PI / 2, end: 0.2 },
@@ -13,7 +13,7 @@ const viewer = new PhotoSphereViewer.Viewer({
 	caption: "Parc national du Mercantour <b>&copy; Damien Sorel</b>",
 	loadingImg: baseUrl + "2.png",
 	touchmoveTwoFingers: true,
-	mousewheelCtrlKey: true,
+	mousewheelCtrlKey: false,
 
 	defaultPitch: animatedValues.pitch.start,
 	defaultYaw: animatedValues.yaw.start,
