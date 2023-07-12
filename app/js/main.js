@@ -1,4 +1,4 @@
-const baseUrl = "./assets/images/360/";
+const baseUrl = "assets/images/360/";
 
 const animatedValues = {
 	pitch: { start: -Math.PI / 2, end: 0.2 },
@@ -6,7 +6,6 @@ const animatedValues = {
 	zoom: { start: 0, end: 50 },
 	fisheye: { start: 2, end: 0 },
 };
-
 const viewer = new PhotoSphereViewer.Viewer({
 	container: "viewer",
 	panorama: baseUrl + "2.png",
@@ -14,7 +13,6 @@ const viewer = new PhotoSphereViewer.Viewer({
 	loadingImg: baseUrl + "2.png",
 	touchmoveTwoFingers: true,
 	mousewheelCtrlKey: false,
-
 	defaultPitch: animatedValues.pitch.start,
 	defaultYaw: animatedValues.yaw.start,
 	defaultZoomLvl: animatedValues.zoom.start,
@@ -70,4 +68,104 @@ function intro() {
 	}).then(() => {
 		autorotate.start();
 	});
+}
+
+const mapCities = [
+	{
+		style: "--diagonal-deg: 140deg;",
+		elementClass: "diagonal__btn",
+		btnSymbolValue: "M1",
+		btnTextValue: "Apartments",
+		yCoordinate: "192px",
+		xCoordiante: "986px",
+		image: "test3.jpg",
+	},
+
+	{
+		style: "--diagonal-deg: 140deg;",
+		elementClass: "diagonal__btn",
+		btnSymbolValue: "P1",
+		btnTextValue: "Park",
+		yCoordinate: "497px",
+		xCoordiante: "655px",
+		image: "test3.jpg",
+	},
+	{
+		style: "--diagonal-deg: 140deg;",
+		elementClass: "diagonal__btn",
+		btnSymbolValue: "M2",
+		btnTextValue: "Mantions",
+		yCoordinate: "542px",
+		xCoordiante: "229px",
+		image: "test3.jpg",
+	},
+	{
+		style: "--diagonal-deg: 140deg;",
+		elementClass: "diagonal__btn",
+		btnSymbolValue: "R2",
+		btnTextValue: "Road",
+		yCoordinate: "680px",
+		xCoordiante: "1199px",
+		image: "2.png",
+	},
+];
+
+const mainMapContainer = document.querySelector("#picked-places");
+const tourCloser = document.querySelector("#tour__closer");
+let mainMapCitiesBtns = "";
+
+mapCities.forEach((item) => {
+	mainMapCitiesBtns += `
+		<button style="--diagonal-deg: 140deg;transform:translate(${item.xCoordiante}, ${item.yCoordinate})" class="tour-container__opener diagonal__btn">
+			<div class="btn__symbol">
+				${item.btnSymbolValue}
+			</div>
+			<div class="btn__text">
+				${item.btnTextValue}
+			</div>
+		</button>
+	`;
+});
+mainMapContainer.innerHTML += mainMapCitiesBtns;
+
+document.querySelector(".diagonal__btn").addEventListener("click", (event) => {
+	event.preventDefault();
+});
+
+document.querySelectorAll(".tour-container__opener").forEach((el, idx) => {
+	el.addEventListener("click", () => {
+		const comparing = viewer.config.panorama !== baseUrl + mapCities[idx].image 
+		if(comparing) {
+			viewer.setPanorama(baseUrl + mapCities[idx].image);
+		}
+
+		setTimeout(() => {
+			gsap.to("#viewer", { duration: 0.5, opacity: 1, scale: 1 });
+			gsap.to(".tour-container", {
+				duration: 0.2,
+				opacity: 1,
+				visibility: "visible",
+				pointerEvents: "auto",
+			});
+		}, 500);
+		autorotate.stop()
+	});
+});
+
+function printMousePos(event) {
+	console.log("clientX: " + event.clientX + " - clientY: " + event.clientY);
+}
+
+tourCloser.addEventListener("click", () => {
+	gsap.to("#viewer", { duration: 0.5, opacity: 0, scale: 0.8 });
+	gsap.to(".tour-container", {
+		duration: 1,
+		opacity: 0,
+		onComplete: hideContainer(),
+	});
+});
+document.addEventListener("click", printMousePos);
+
+function hideContainer() {
+	gsap.to(".tour-container", { pointerEvents: "none" });
 }
