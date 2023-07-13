@@ -296,13 +296,25 @@ html, body {
 
 .contact {
     &-container {
-        display: flex;
-        justify-content: center;
         min-height: 100%;
-        align-items: center;
         opacity: 0;
 		scale: 0.8;
 		pointer-events: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &__closer {
+            align-self: flex-start;
+            padding: 0;
+            position: relative;
+            top: -10px;
+        }
+    }
+    &-popup {
+        max-height: fit-content;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     &-socials {
         display: flex;
@@ -325,7 +337,11 @@ html, body {
         background: url("../assets/images/wraps/contact-intro.png") center center/cover no-repeat;
         padding: 80px 30px 80px 25px;
         position: relative;
-
+        &-wrapper {
+            display: grid;
+            grid-template-columns: 457px 457px;
+            justify-content: center;
+        }
         &__shadow {
             content: "";
             position: absolute;
@@ -361,11 +377,7 @@ html, body {
     }
 
 
-    &-popup {
-        display: grid;
-        grid-template-columns: 457px 457px;
-        justify-content: center;
-    }
+
     &__header {
         text-align: center;
         font-family: Times New Roman;

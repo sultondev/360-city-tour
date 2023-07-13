@@ -141,21 +141,20 @@ document.querySelectorAll(".tour-container__opener").forEach((el, idx) => {
 			viewer.setPanorama(baseUrl + mapCities[idx].image);
 		}
 
-		setTimeout(() => {
-			gsap.to(".tour-container", {
-				duration: 0.5,
-				opacity: 1,
-				scale: 1,
-				pointerEvents: "auto",
-			});
-			gsap.to("#modal", {
-				duration: 0.2,
-				opacity: 1,
-				background: "#00000099",
-				pointerEvents: "auto",
-				zIndex: 100,
-			});
-		}, 200);
+		gsap.to(".tour-container", {
+			duration: 0.5,
+			opacity: 1,
+			scale: 1,
+			pointerEvents: "auto",
+		});
+		gsap.to("#modal", {
+			duration: 0.2,
+			opacity: 1,
+			background: "#00000099",
+			backdropFilter: "none",
+			pointerEvents: "auto",
+			zIndex: 100,
+		});
 		autorotate.stop();
 	});
 });
