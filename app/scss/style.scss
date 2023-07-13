@@ -25,9 +25,8 @@ html, body {
 #viewer {
     margin: 0;
     width: 100%;
-    opacity: 0;
+    opacity: 1;
     height: 100%;
-    transform: scale(0.7);
     font-family: sans-serif;
     position: relative;
     top: 0;
@@ -39,7 +38,90 @@ html, body {
 .app {
     min-height: 100vh;
     min-width: 100vw;
+    &-main {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        justify-content: space-between;
+    }
 }
+
+.diagonal__btn {
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 3px 4px;
+    border: 2px solid;
+    border-image: linear-gradient(140deg, var(--light-bg) 60%, transparent 40%);
+    background: diagonalBg(var(--diagonal-deg));
+    cursor: pointer;
+    // &::before {
+    //     content: "";
+    //     border: 2px solid;
+    //     border-image: linear-gradient(0deg, var(--light-bg) 60%, var(--black-clr) 0%);
+    //     background: diagonalBg(var(--diagonal-deg));
+    //     width: 100%;
+    //     height: 100%;
+    //     left: 0;
+    //     top:0;
+    //     position: absolute;
+    //     z-index: 100;
+    // }
+
+    & .btn__symbol {
+        background: var(--white-clr);
+        color: var(--black-clr);
+        padding: 4px 6px;
+        margin-right: 10px;
+    }
+    & .btn__text {
+        color: white;
+        position: relative;
+        z-index: 100;
+        padding: 2px 8px;
+    }
+}
+
+// df means default
+.df__input {
+    border: none;
+    border-bottom: 1px solid var(--white-clr);
+    background: transparent;
+    outline: none;
+    color: var(--white-clr);
+    padding: 13px 15px;
+
+
+    /* typography */
+    font-family: Montserrat;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    &::placeholder {
+        color: var(--white-clr);
+    }
+}
+
+.df__submit {
+    padding: 14px 0 9px 0;
+    cursor: pointer;
+
+    /* typography */
+    color: #000;
+    font-family: Montserrat;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    text-transform: uppercase;
+}
+
+
+
 
 .tour {
     &-container {
@@ -47,29 +129,14 @@ html, body {
         height: 100%;
         position: absolute;
         display: flex;
+        opacity: 0;
+        pointer-events: none;
         flex-direction: column;
         align-items: flex-end;
-        opacity: 0;
-        visibility: hidden;
         left: 0;
         top: 0;
-        background: #00000099;
-        z-index: 99999;
+        z-index: 101;
         padding: 80px 120px;
-        &__closer{
-            background: transparent;
-            outline: none;
-            border: none;
-            cursor: pointer;
-            justify-self: flex-end;
-            max-height: fit-content;
-            max-width: fit-content;
-            padding: 16px 0 16px 16px;
-            &-icon {
-                width: 22px;
-                height: 22px;
-            }
-        }
     }
     &-street {
         &__code {
@@ -87,7 +154,14 @@ html, body {
         display: flex;
         margin-bottom: 10px;
         align-items: center;
-    
+    }
+
+    &-main {
+            &__download {
+            padding: 10px 16px;
+            position: relative;
+            z-index: 99999999999;
+        }
     }
 }
 
@@ -98,6 +172,7 @@ html, body {
 
 .main{
     min-height: 100%;
+    padding: 0px 30px 30px 30px;
     &-city {
         position: absolute;
         min-height: 100vh;
@@ -140,7 +215,7 @@ html, body {
 
         &__marks {
             position: absolute;
-            z-index: 1000;
+            z-index: 20;
             width: 100vw;
             height: 100vh;
         }
@@ -185,46 +260,130 @@ html, body {
     }
 }
 
+.modal {
+    &-container {
+        &__closer{
+            background: transparent;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            justify-self: flex-end;
+            max-height: fit-content;
+            max-width: fit-content;
+            padding: 16px 0 16px 16px;
+            &-icon {
+                width: 22px;
+                height: 22px;
+            }
+        }
+    }
+}
 
 .main {
     position: relative;
     z-index: 100;
 }
 
-.diagonal__btn {
-    border: none;
-    color: white;
-    display: flex;
-    align-items: center;
-    padding: 3px 4px;
-    border: 2px solid;
-    border-image: linear-gradient(140deg, var(--light-bg) 60%, transparent 40%);
-    background: diagonalBg(var(--diagonal-deg));
-    position:absolute;
-    cursor: pointer;
-    // &::before {
-    //     content: "";
-    //     border: 2px solid;
-    //     border-image: linear-gradient(0deg, var(--light-bg) 60%, var(--black-clr) 0%);
-    //     background: diagonalBg(var(--diagonal-deg));
-    //     width: 100%;
-    //     height: 100%;
-    //     left: 0;
-    //     top:0;
-    //     position: absolute;
-    //     z-index: 100;
-    // }
 
-    & .btn__symbol {
-        background: var(--white-clr);
-        color: var(--black-clr);
-        padding: 4px 6px;
-        margin-right: 10px;
+#modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.contact {
+    &-container {
+        display: flex;
+        justify-content: center;
+        min-height: 100%;
+        align-items: center;
+        opacity: 0;
+		scale: 0.8;
+		pointer-events: none;
     }
-    & .btn__text {
-        color: white;
+    &-socials {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &__link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 15px;
+            color: var(--white-clr);
+            text-decoration: none;
+        }
+        &__icon {
+            margin-right: 10px;
+        }
+    }
+    &-content {
+        color: #FFF;
+        background: url("../assets/images/wraps/contact-intro.png") center center/cover no-repeat;
+        padding: 80px 30px 80px 25px;
         position: relative;
-        z-index: 100;
-        padding: 2px 8px;
+
+        &__shadow {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #000000BF;
+            left: 0;
+            top: 0;
+            z-index: 1;
+        }
+        &__text {
+            position: relative;
+            z-index: 2;
+        }
+    }
+
+    &-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 82px 30px;
+        &__name {
+            margin-bottom: 44px;
+        }
+
+        &__email {
+            margin-bottom: 44px;
+        }
+
+        &__phone {
+            margin-bottom: 30px;
+        }
+    }
+
+
+    &-popup {
+        display: grid;
+        grid-template-columns: 457px 457px;
+        justify-content: center;
+    }
+    &__header {
+        text-align: center;
+        font-family: Times New Roman;
+        font-size: 45px;
+        font-style: italic;
+        font-weight: 400;
+        line-height: 100%;
+        text-transform: capitalize;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    &__subheader {
+        margin-bottom: 30px;
+        font-family: Montserrat;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%;
+        text-align: center;
     }
 }

@@ -33,7 +33,7 @@
                 
             </div>
         </div>
-        <div class="container">
+        <div class="container app-main">
             <header class="header">
                 <div class="header-container">
                     <div class="header-logo">
@@ -53,32 +53,95 @@
                 </div>
             </header>
             <main class="main">
+                <button style="--diagonal-deg: 140deg;" class="diagonal__btn tour-main__download" id="tour__download">
+                    Download brochure
+                </button>
             </main>
         </div>
     </div>
     
     <!-- the viewer container must have a defined size -->
-    <div class="tour-container">
-        <div class="tour-header">
-            <div class="tour-street__code">
-                2
+    <div id="modal">
+        <div class="tour-container modal-container">
+            <div class="tour-header">
+                <div class="tour-street__code">
+                    2
+                </div>
+                <div class="tour-street__name">
+                    L-Shape
+                </div>
+                <button class="modal-container__closer" id="tour__closer">
+                    <img src="./assets/images/icons/close-icon.svg" class="modal-container__closer-icon" alt="">
+                </button>
             </div>
-            <div class="tour-street__name">
-                L-Shape
-            </div>
-            <button class="tour-container__closer" id="tour__closer">
-                <img src="./assets/images/icons/close-icon.svg" class="tour-container__closer-icon" alt="">
-            </button>
+            <div id="viewer"></div>
         </div>
-        <div id="viewer"></div>
+
+        <div class="contact-container modal-container">
+            <div class="contact-popup">
+                <div class="contact-content">
+                    <div class="contact-content__shadow">
+
+                    </div>
+                    <div class="contact-content__text" >
+                        <h4 class="contact__header">
+                            don't miss the unique offer
+                        </h4>
+                        <div class="contact__subheader">
+                            Be the first to experience the beauty of Keturah Resort at our exclusive private screening event! Leave your contact information below to receive an invitation to our special event.
+                        </div>
+                        <div class="contact-socials">
+                            <a href="https://telegram.org/" class="contact-socials__link">
+                                <img src="./assets/images/icons/telegram.svg" class="contact-socials__icon" alt="">
+                                <span class="">
+                                    Telegram
+                                </span>
+                            </a>
+                            <a href="https://telegram.org/" class="contact-socials__link">
+                                <img src="./assets/images/icons/what-is-up.svg" class="contact-socials__icon" alt="">
+                                <span class="">
+                                    What's up
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <form action="#" class="contact-form">
+                    <input type="text" class="df__input contact-form__name" placeholder="ijdwailjdilw">
+                    <input type="email" class="df__input contact-form__email" placeholder="ijdwailjdilw">
+                    <input type="tel" class="df__input contact-form__phone" placeholder="ijdwailjdilw">
+                    <button type="submit" class="df__submit">
+                        Join now
+                    </button>
+                </form>
+            </div>
+            <button class="modal-container__closer" id="contact__closer">
+                <img src="./assets/images/icons/close-icon.svg" class="modal-container__closer-icon" alt="">
+            </button>
+
+        </div>
     </div>
-    
-    <script src="js/minified/main.min.js">
 
-    </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="js/minified/main.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+
     <script>
-
+        document.querySelector('#tour__download').addEventListener('click', () => {
+            gsap.to(".contact-container", {
+				duration: 0.5,
+				opacity: 1,
+				scale: 1,
+				pointerEvents: "auto",
+			});
+            gsap.to('#modal', {
+                zIndex: 999,
+                duration: 0.4,
+                background: 'rgba(0, 0, 0, 1)',
+                backdropFilter: "blur(10px)",
+                opacity: 1,
+        		pointerEvents: "auto",
+            })
+        })
     </script>
 </body>
 

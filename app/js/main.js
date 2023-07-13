@@ -11,7 +11,7 @@ const viewer = new PhotoSphereViewer.Viewer({
 	panorama: baseUrl + "2.png",
 	caption: "Parc national du Mercantour <b>&copy; Damien Sorel</b>",
 	loadingImg: baseUrl + "2.png",
-	touchmoveTwoFingers: true,
+	touchmoveTwoFingers: false,
 	mousewheelCtrlKey: false,
 	defaultPitch: animatedValues.pitch.start,
 	defaultYaw: animatedValues.yaw.start,
@@ -112,11 +112,12 @@ const mapCities = [
 
 const mainMapContainer = document.querySelector("#picked-places");
 const tourCloser = document.querySelector("#tour__closer");
+const contactCloser = document.querySelector("#contact__closer");
 let mainMapCitiesBtns = "";
 
 mapCities.forEach((item) => {
 	mainMapCitiesBtns += `
-		<button style="--diagonal-deg: 140deg;transform:translate(${item.xCoordiante}, ${item.yCoordinate})" class="tour-container__opener diagonal__btn">
+		<button style="position:absolute;--diagonal-deg: 140deg;transform:translate(${item.xCoordiante}, ${item.yCoordinate})" class="tour-container__opener diagonal__btn">
 			<div class="btn__symbol">
 				${item.btnSymbolValue}
 			</div>
@@ -134,21 +135,28 @@ document.querySelector(".diagonal__btn").addEventListener("click", (event) => {
 
 document.querySelectorAll(".tour-container__opener").forEach((el, idx) => {
 	el.addEventListener("click", () => {
-		const comparing = viewer.config.panorama !== baseUrl + mapCities[idx].image 
-		if(comparing) {
+		const comparing =
+			viewer.config.panorama !== baseUrl + mapCities[idx].image;
+		if (comparing) {
 			viewer.setPanorama(baseUrl + mapCities[idx].image);
 		}
 
 		setTimeout(() => {
-			gsap.to("#viewer", { duration: 0.5, opacity: 1, scale: 1 });
 			gsap.to(".tour-container", {
-				duration: 0.2,
+				duration: 0.5,
 				opacity: 1,
-				visibility: "visible",
+				scale: 1,
 				pointerEvents: "auto",
 			});
-		}, 500);
-		autorotate.stop()
+			gsap.to("#modal", {
+				duration: 0.2,
+				opacity: 1,
+				background: "#00000099",
+				pointerEvents: "auto",
+				zIndex: 100,
+			});
+		}, 200);
+		autorotate.stop();
 	});
 });
 
@@ -157,15 +165,30 @@ function printMousePos(event) {
 }
 
 tourCloser.addEventListener("click", () => {
-	gsap.to("#viewer", { duration: 0.5, opacity: 0, scale: 0.8 });
 	gsap.to(".tour-container", {
 		duration: 1,
 		opacity: 0,
-		onComplete: hideContainer(),
+		scale: 0.8,
+		pointerEvents: "none",
+	});
+	gsap.to("#modal", {
+		duration: 0.4,
+		opacity: 0,
+		pointerEvents: "none",
 	});
 });
-document.addEventListener("click", printMousePos);
+contactCloser.addEventListener("click", () => {
+	gsap.to(".contact-container", {
+		duration: 1,
+		opacity: 0,
+		scale: 0.8,
+		pointerEvents: "none",
+	});
+	gsap.to("#modal", {
+		duration: 0.4,
+		opacity: 0,
+		pointerEvents: "none",
+	});
+});
 
-function hideContainer() {
-	gsap.to(".tour-container", { pointerEvents: "none" });
-}
+document.addEventListener("click", printMousePos);
