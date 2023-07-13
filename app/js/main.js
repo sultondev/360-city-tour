@@ -76,8 +76,8 @@ const mapCities = [
 		elementClass: "diagonal__btn",
 		btnSymbolValue: "M1",
 		btnTextValue: "Apartments",
-		yCoordinate: "192px",
-		xCoordiante: "986px",
+		yCoordinate: 192,
+		xCoordiante: 986,
 		image: "test3.jpg",
 	},
 
@@ -86,8 +86,8 @@ const mapCities = [
 		elementClass: "diagonal__btn",
 		btnSymbolValue: "P1",
 		btnTextValue: "Park",
-		yCoordinate: "497px",
-		xCoordiante: "655px",
+		yCoordinate: 497,
+		xCoordiante: 655,
 		image: "test3.jpg",
 	},
 	{
@@ -95,8 +95,8 @@ const mapCities = [
 		elementClass: "diagonal__btn",
 		btnSymbolValue: "M2",
 		btnTextValue: "Mantions",
-		yCoordinate: "542px",
-		xCoordiante: "229px",
+		yCoordinate: 542,
+		xCoordiante: 229,
 		image: "test3.jpg",
 	},
 	{
@@ -104,8 +104,8 @@ const mapCities = [
 		elementClass: "diagonal__btn",
 		btnSymbolValue: "R2",
 		btnTextValue: "Road",
-		yCoordinate: "680px",
-		xCoordiante: "1199px",
+		yCoordinate: 680,
+		xCoordiante: 1199,
 		image: "2.png",
 	},
 ];
@@ -115,9 +115,30 @@ const tourCloser = document.querySelector("#tour__closer");
 const contactCloser = document.querySelector("#contact__closer");
 let mainMapCitiesBtns = "";
 
+function convertToPercentage(
+	markerX,
+	markerY,
+	stickImageClass = ".main-city__picture"
+) {
+	var image = document.querySelector(stickImageClass);
+	var imageWidth = image.offsetWidth;
+	var imageHeight = image.offsetHeight;
+
+	var percentX = (markerX / imageWidth) * 100;
+	var percentY = (markerY / imageHeight) * 100;
+
+	return { x: percentX, y: percentY };
+}
+
 mapCities.forEach((item) => {
+	const percentageCoordinates = convertToPercentage(
+		item.xCoordiante,
+		item.yCoordinate
+	);
+	console.log(percentageCoordinates);
+
 	mainMapCitiesBtns += `
-		<button style="position:absolute;--diagonal-deg: 140deg;transform:translate(${item.xCoordiante}, ${item.yCoordinate})" class="tour-container__opener diagonal__btn">
+		<button style="position:absolute;--diagonal-deg: 140deg;left: ${percentageCoordinates.x}%;top: ${percentageCoordinates.y}%;" class="tour-container__opener diagonal__btn">
 			<div class="btn__symbol">
 				${item.btnSymbolValue}
 			</div>
@@ -159,9 +180,7 @@ document.querySelectorAll(".tour-container__opener").forEach((el, idx) => {
 	});
 });
 
-function printMousePos(event) {
-	console.log("clientX: " + event.clientX + " - clientY: " + event.clientY);
-}
+
 
 tourCloser.addEventListener("click", () => {
 	gsap.to(".tour-container", {
@@ -176,6 +195,7 @@ tourCloser.addEventListener("click", () => {
 		pointerEvents: "none",
 	});
 });
+
 contactCloser.addEventListener("click", () => {
 	gsap.to(".contact-container", {
 		duration: 1,
@@ -190,4 +210,10 @@ contactCloser.addEventListener("click", () => {
 	});
 });
 
-document.addEventListener("click", printMousePos);
+
+// function written to get new x and y coordinates in px unit
+
+// function printMousePos(event) {
+// 	console.log("clientX: " + event.clientX + " - clientY: " + event.clientY);
+// }
+// document.addEventListener("click", printMousePos);
