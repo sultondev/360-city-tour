@@ -67,14 +67,16 @@ function buildScripts(watch = false) {
 	};
 }
 
-function build() {
+function build(done) {
 	return series(
 		cleanDist,
 		buildAssets(),
 		buildStyles(),
 		buildScripts(),
 		buildMarkups
-	)();
+	)(
+	done()
+	);
 }
 
 function buildAssets(watch = false) {
