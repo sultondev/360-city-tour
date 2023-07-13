@@ -29,7 +29,7 @@
             <div class="main-city__shadows">
             </div>
             <img src="assets/images/cities/main-city.png" alt="" class="main-city__picture">
-            <div class="main-city__marks" id="picked-places">
+            <div class="main-city__marks" id="marked-places">
                 
             </div>
         </div>
@@ -53,7 +53,7 @@
                 </div>
             </header>
             <main class="main">
-                <button style="--diagonal-deg: 140deg;" class="diagonal__btn tour-main__download" id="tour__download">
+                <button style="--diagonal-deg: 140deg;" class="df__btn tour-main__download" id="tour__download">
                     Download brochure
                 </button>
             </main>
@@ -68,13 +68,17 @@
                     2
                 </div>
                 <div class="tour-street__name">
-                    L-Shape
+                    L-Shape 
                 </div>
                 <button class="modal-container__closer" id="tour__closer">
                     <img src="./assets/images/icons/close-icon.svg" class="modal-container__closer-icon" alt="">
                 </button>
             </div>
-            <div id="viewer"></div>
+            <div id="viewer">
+
+
+                
+            </div>
         </div>
 
         <div class="contact-container modal-container">
@@ -124,31 +128,10 @@
         </div>
     </div>
 
-    <script src="js/minified/main.min.js"></script>
+    <script src="js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
 
-    <script>
-        document.querySelector('#tour__download').addEventListener('click', () => {
-            gsap.to(".contact-container", {
-				duration: 0.5,
-				opacity: 1,
-				scale: 1,
-				pointerEvents: "auto",
-			});
-            gsap.to('#modal', {
-                zIndex: 999,
-                duration: 0.4,
-                background: 'rgba(0, 0, 0, 1)',
-                backdropFilter: "blur(10px)",
-                opacity: 1,
-        		pointerEvents: "auto",
-            })
-        })
-        var pixels = 333;
-        var screenWidth = window.screen.width;
-        var percentage = ( screenWidth - pixels ) / screenWidth 
-        console.log(percentage)
-    </script>
+
 </body>
 
 </html>

@@ -46,42 +46,59 @@ html, body {
     }
 }
 
-.diagonal__btn {
-    border: none;
-    color: white;
-    display: flex;
-    align-items: center;
-    padding: 3px 4px;
-    border: 2px solid;
-    border-image: linear-gradient(140deg, var(--light-bg) 60%, transparent 40%);
-    background: diagonalBg(var(--diagonal-deg));
-    cursor: pointer;
-    // &::before {
-    //     content: "";
-    //     border: 2px solid;
-    //     border-image: linear-gradient(0deg, var(--light-bg) 60%, var(--black-clr) 0%);
-    //     background: diagonalBg(var(--diagonal-deg));
-    //     width: 100%;
-    //     height: 100%;
-    //     left: 0;
-    //     top:0;
-    //     position: absolute;
-    //     z-index: 100;
-    // }
+:root {
+    --br-clr: #ffffff40;
+    --white-clr: #FFFFFF;
+    --light-bg: #141414;
+    --black-clr: #000;
+    --diagonal-deg: 40deg;
+}
+@function diagonalBg($base) {
+    
+    @return linear-gradient($base, var(--light-bg) 60%, var(--black-clr) 40%)
+}
 
-    & .btn__symbol {
-        background: var(--white-clr);
-        color: var(--black-clr);
-        padding: 4px 6px;
-        margin-right: 10px;
-    }
-    & .btn__text {
+.df{
+    &__btn {
+        border: none;
         color: white;
+        display: flex;
+        align-items: center;
+        padding: 3px 4px;
+        background: var(--black-clr);
+        cursor: pointer;
         position: relative;
-        z-index: 100;
-        padding: 2px 8px;
+        overflow: hidden;
+        border-left: 1px solid #2B2B2B;
+
+
+        &::before {
+            content: "";
+            background: rgba(255, 255, 255, 0.20);
+            transform: skew(var(--diagonal-deg));
+            width: 100%;
+            height: 100%;
+            left: -50%;
+            top:0;
+            position: absolute;
+            z-index: 100;
+        }
+
+        & .btn__symbol {
+            background: var(--white-clr);
+            color: var(--black-clr);
+            padding: 4px 6px;
+            margin-right: 10px;
+        }
+        & .btn__text {
+            color: white;
+            position: relative;
+            z-index: 100;
+            padding: 2px 8px;
+        }
     }
 }
+
 
 // df means default
 .df__input {

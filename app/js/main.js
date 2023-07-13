@@ -6,10 +6,11 @@ const animatedValues = {
 	zoom: { start: 0, end: 50 },
 	fisheye: { start: 2, end: 0 },
 };
+
 const viewer = new PhotoSphereViewer.Viewer({
 	container: "viewer",
 	panorama: baseUrl + "2.png",
-	caption: "Parc national du Mercantour <b>&copy; Damien Sorel</b>",
+	// caption: "Parc national du Mercantour <b>&copy; Damien Sorel</b>",
 	loadingImg: baseUrl + "2.png",
 	touchmoveTwoFingers: false,
 	mousewheelCtrlKey: false,
@@ -53,6 +54,7 @@ const autorotate = viewer.getPlugin(PhotoSphereViewer.AutorotatePlugin);
 
 viewer.addEventListener("ready", intro, { once: true });
 
+// intro animation for virtual tour viewer
 function intro() {
 	autorotate.stop();
 
@@ -70,51 +72,116 @@ function intro() {
 	});
 }
 
+// constant data of marked places not to repeat in layout
 const mapCities = [
 	{
-		style: "--diagonal-deg: 140deg;",
-		elementClass: "diagonal__btn",
+		style: "--diagonal-deg: 20deg;",
+		elementClass: "df__btn",
 		btnSymbolValue: "M1",
 		btnTextValue: "Apartments",
 		yCoordinate: 192,
 		xCoordiante: 986,
-		image: "test3.jpg",
+		image: "1.png",
 	},
 
 	{
-		style: "--diagonal-deg: 140deg;",
-		elementClass: "diagonal__btn",
+		style: "--diagonal-deg: -20deg;",
+		elementClass: "df__btn",
 		btnSymbolValue: "P1",
 		btnTextValue: "Park",
 		yCoordinate: 497,
 		xCoordiante: 655,
-		image: "test3.jpg",
+		image: "2.png",
 	},
 	{
-		style: "--diagonal-deg: 140deg;",
-		elementClass: "diagonal__btn",
+		style: "--diagonal-deg: -26deg;",
+		elementClass: "df__btn",
 		btnSymbolValue: "M2",
 		btnTextValue: "Mantions",
 		yCoordinate: 542,
 		xCoordiante: 229,
-		image: "test3.jpg",
+		image: "4.png",
 	},
 	{
-		style: "--diagonal-deg: 140deg;",
-		elementClass: "diagonal__btn",
+		style: "--diagonal-deg: -30deg;",
+		elementClass: "df__btn",
 		btnSymbolValue: "R2",
 		btnTextValue: "Road",
 		yCoordinate: 680,
 		xCoordiante: 1199,
-		image: "2.png",
+		image: "3.png",
 	},
 ];
 
-const mainMapContainer = document.querySelector("#picked-places");
+const mainMapContainer = document.querySelector("#marked-places");
 const tourCloser = document.querySelector("#tour__closer");
 const contactCloser = document.querySelector("#contact__closer");
+
 let mainMapCitiesBtns = "";
 
+mapCities.forEach((item) => {
+	const percentageCoordinates = convertToPercentage(
+		item.xCoordiante,
+		item.yCoordinate
+	);
+
+	mainMapCitiesBtns += `
+		<button style="position:absolute;left: ${percentageCoordinates.x}%;top: ${percentageCoordinates.y}%;${item.style}" class="tour-container__opener df__btn">
+			<div class="btn__symbol">
+				${item.btnSymbolValue}
+			</div>
+			<div class="btn__text">
+				${item.btnTextValue}
+			</div>
+		</button>
+	`;
+});
+
+// merging the buttons into mainMapContainer
+mainMapContainer.innerHTML += mainMapCitiesBtns;
+
+// after mergine getting all buttons to open invidual 360 picture with button
+const markedPlacesButtons = document.querySelectorAll(
+	".tour-container__opener"
+);
+const contactOpenner = document.querySelector("#tour__download");
+
+markedPlacesButtons.forEach((el, idx) => {
+	el.addEventListener("click", () => {
+		viewer.setPanorama(baseUrl + mapCities[idx].image);
+		animateContainer(".tour-container", 0.5, 1, 1, "auto");
+		animateContainer("#modal", 0.2, 1, 1, "auto", {
+			background: "#00000099",
+			backdropFilter: "none",
+			pointerEvents: "auto",
+			zIndex: 100,
+		});
+		autorotate.stop();
+	});
+});
+
+tourCloser.addEventListener("click", () => {
+	animateContainer(".tour-container", 1, 0, 0.8, "none");
+	animateContainer("#modal", 0.4, 0, 1, "none");
+	viewer.zoom(0);
+});
+
+contactCloser.addEventListener("click", () => {
+	animateContainer(".contact-container", 1, 0, 0.8, "none");
+	animateContainer("#modal", 0.4, 0, 1, "none");
+});
+
+contactOpenner.addEventListener("click", () => {
+	animateContainer(".contact-container", 0.5, 1, 1, "auto");
+
+	animateContainer("#modal", 0.4, 1, 1, "auto", {
+		zIndex: 999,
+		background: "rgba(0, 0, 0, 1)",
+		backdropFilter: "blur(10px)",
+	});
+});
+
+// convetor of x and y coordinates of marked places buttons
 function convertToPercentage(
 	markerX,
 	markerY,
@@ -130,86 +197,22 @@ function convertToPercentage(
 	return { x: percentX, y: percentY };
 }
 
-mapCities.forEach((item) => {
-	const percentageCoordinates = convertToPercentage(
-		item.xCoordiante,
-		item.yCoordinate
-	);
-	console.log(percentageCoordinates);
-
-	mainMapCitiesBtns += `
-		<button style="position:absolute;--diagonal-deg: 140deg;left: ${percentageCoordinates.x}%;top: ${percentageCoordinates.y}%;" class="tour-container__opener diagonal__btn">
-			<div class="btn__symbol">
-				${item.btnSymbolValue}
-			</div>
-			<div class="btn__text">
-				${item.btnTextValue}
-			</div>
-		</button>
-	`;
-});
-mainMapContainer.innerHTML += mainMapCitiesBtns;
-
-document.querySelector(".diagonal__btn").addEventListener("click", (event) => {
-	event.preventDefault();
-});
-
-document.querySelectorAll(".tour-container__opener").forEach((el, idx) => {
-	el.addEventListener("click", () => {
-		const comparing =
-			viewer.config.panorama !== baseUrl + mapCities[idx].image;
-		if (comparing) {
-			viewer.setPanorama(baseUrl + mapCities[idx].image);
-		}
-
-		gsap.to(".tour-container", {
-			duration: 0.5,
-			opacity: 1,
-			scale: 1,
-			pointerEvents: "auto",
-		});
-		gsap.to("#modal", {
-			duration: 0.2,
-			opacity: 1,
-			background: "#00000099",
-			backdropFilter: "none",
-			pointerEvents: "auto",
-			zIndex: 100,
-		});
-		autorotate.stop();
+function animateContainer(
+	containerSelector,
+	duration = 2,
+	opacity = 1,
+	scale = 1,
+	pointerEvents = "auto",
+	customProperties = {}
+) {
+	gsap.to(containerSelector, {
+		duration: duration,
+		opacity: opacity,
+		scale: scale,
+		pointerEvents: pointerEvents,
+		...customProperties,
 	});
-});
-
-
-
-tourCloser.addEventListener("click", () => {
-	gsap.to(".tour-container", {
-		duration: 1,
-		opacity: 0,
-		scale: 0.8,
-		pointerEvents: "none",
-	});
-	gsap.to("#modal", {
-		duration: 0.4,
-		opacity: 0,
-		pointerEvents: "none",
-	});
-});
-
-contactCloser.addEventListener("click", () => {
-	gsap.to(".contact-container", {
-		duration: 1,
-		opacity: 0,
-		scale: 0.8,
-		pointerEvents: "none",
-	});
-	gsap.to("#modal", {
-		duration: 0.4,
-		opacity: 0,
-		pointerEvents: "none",
-	});
-});
-
+}
 
 // function written to get new x and y coordinates in px unit
 
