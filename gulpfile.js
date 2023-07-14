@@ -7,6 +7,8 @@ const browserSync = require("browser-sync").create();
 const autoprefixer = require("gulp-autoprefixer");
 const sourcemap = require("gulp-sourcemaps");
 const clean = require("gulp-clean");
+const imagemin = require("gulp-imagemin");
+
 function watching() {
 	series(
 		cleanDist,
@@ -71,12 +73,11 @@ function build(done) {
 	return series(
 		cleanDist,
 		buildAssets(),
+		imgSquash,
 		buildStyles(),
 		buildScripts(),
 		buildMarkups
-	)(
-	done()
-	);
+	)(done());
 }
 
 function buildAssets(watch = false) {
@@ -110,6 +111,12 @@ function reloadPageOnAnyChanges() {
 			baseDir: "dist/",
 		},
 	});
+}
+
+async function imgSquash() {
+	return src("dist/assets/images/**/*")
+		.pipe(imagemin())
+		.pipe(dest("dist/assets/images"));
 }
 
 exports.cleanDist = cleanDist;

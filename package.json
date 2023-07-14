@@ -32,9 +32,12 @@
     "gulp-autoprefixer": "^8.0.0",
     "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^7.1.0",
     "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-uglify-es": "^3.0.0",
+    "imagemin-jpegtran": "^7.0.0",
+    "imagemin-pngquant": "^9.0.2",
     "sass": "^1.63.6",
     "three": "^0.154.0"
   },
