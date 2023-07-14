@@ -1,5 +1,12 @@
 const baseUrl = "assets/images/360/";
 
+const ponoramImageFormats = {
+	jpg: ".jpg",
+	png: ".png",
+	avif: ".avif",
+	webp: ".webp",
+};
+
 const animatedValues = {
 	pitch: { start: -Math.PI / 2, end: 0.2 },
 	yaw: { start: Math.PI, end: 0 },
@@ -81,7 +88,7 @@ const mapCities = [
 		btnTextValue: "Apartments",
 		yCoordinate: 192,
 		xCoordiante: 986,
-		image: "1.png",
+		image: "1",
 	},
 
 	{
@@ -91,7 +98,7 @@ const mapCities = [
 		btnTextValue: "Park",
 		yCoordinate: 497,
 		xCoordiante: 655,
-		image: "2.png",
+		image: "2",
 	},
 	{
 		style: "--diagonal-deg: -26deg;",
@@ -100,7 +107,7 @@ const mapCities = [
 		btnTextValue: "Mantions",
 		yCoordinate: 542,
 		xCoordiante: 229,
-		image: "4.png",
+		image: "4",
 	},
 	{
 		style: "--diagonal-deg: -30deg;",
@@ -109,7 +116,7 @@ const mapCities = [
 		btnTextValue: "Road",
 		yCoordinate: 680,
 		xCoordiante: 1199,
-		image: "3.png",
+		image: "3",
 	},
 ];
 
@@ -148,7 +155,9 @@ const contactOpenner = document.querySelector("#tour__download");
 
 markedPlacesButtons.forEach((el, idx) => {
 	el.addEventListener("click", () => {
-		viewer.setPanorama(baseUrl + mapCities[idx].image);
+		viewer.setPanorama(
+			baseUrl + mapCities[idx].image + ponoramImageFormats.avif
+		);
 		animateContainer(".tour-container", 0.5, 1, 1, "auto");
 		animateContainer("#modal", 0.2, 1, 1, "auto", {
 			background: "#00000099",

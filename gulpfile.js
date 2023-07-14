@@ -8,11 +8,15 @@ const autoprefixer = require("gulp-autoprefixer");
 const sourcemap = require("gulp-sourcemaps");
 const clean = require("gulp-clean");
 const imagemin = require("gulp-imagemin");
+const avif = require("gulp-avif");
+const webp = require("gulp-webp");
+const cached = require("gulp-cached");
 
 function watching() {
 	series(
 		cleanDist,
 		buildAssets(),
+		imgSquashAvif,
 		buildStyles(),
 		buildScripts(),
 		buildMarkups,
@@ -104,21 +108,38 @@ function cleanDist() {
 	return src("dist", { allowEmpty: true }).pipe(clean());
 }
 
+function imgSquash() {
+	return src(["dist/assets/images/**/*.*", "!dist/assets/images/**/*.svg"])
+		.pipe(avif())
+
+		.pipe(src("dist/assets/images/**/*.*"))
+		.pipe(
+			webp({
+				qaulity: 70,
+			})
+		)
+
+		.pipe(src("dist/assets/images/**/*.*"))
+		.pipe(imagemin())
+
+		.pipe(dest("dist/assets/images"));
+}
+
+function imgSquashAvif() {
+	return src(["dist/assets/images/**/*.*", "!dist/assets/images/**/*.svg"])
+		.pipe(avif())
+		.pipe(dest("dist/assets/images"));
+}
+
 function reloadPageOnAnyChanges() {
-	console.log("ppsdkpok");
 	browserSync.init({
 		server: {
 			baseDir: "dist/",
 		},
 	});
 }
-
-async function imgSquash() {
-	return src("dist/assets/images/**/*")
-		.pipe(imagemin())
-		.pipe(dest("dist/assets/images"));
-}
-
 exports.cleanDist = cleanDist;
 exports.build = build;
+exports.img = imgSquash;
+
 exports.default = watching;

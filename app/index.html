@@ -28,7 +28,11 @@
         <div class="main-city" id="main-city">
             <div class="main-city__shadows">
             </div>
-            <img src="assets/images/cities/main-city.png" alt="" class="main-city__picture">
+            <picture>
+                <source type="image/avif"class="main-city__picture" srcset="./assets/images/cities/main-city.avif" />
+                <source type="image/webp"class="main-city__picture" srcset="./assets/images/cities/main-city.webp" />
+                <img src="assets/images/cities/main-city.png" class="main-city__picture" loading="lazy">
+            </picture>
             <div class="main-city__marks" id="marked-places">
                 
             </div>
