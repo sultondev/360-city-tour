@@ -1,12 +1,12 @@
 # 360-city-tour
 
-##How to use project
+## How to use project
 
-###first install needed packages
+### first install needed packages
 
 ```npm install```
 
-###second run with gulp
+### second run with gulp
 
 ```gulp & npx gulp```
 
